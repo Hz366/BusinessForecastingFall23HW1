@@ -1,0 +1,86 @@
+---
+title: "MyHomework 1"
+author: "Hanxin Zheng"
+output: html_document
+date: "2023-09-18"
+---
+
+```{r}
+Typical_Employee_Survey_Data=readxl::read_xlsx("C:/Users/chloe/OneDrive/Desktop/Typical_Employee_Survey_Data.xlsx", col_names = FALSE)
+
+#Add Head Rows
+names(Typical_Employee_Survey_Data)[1]= "AGE"
+names(Typical_Employee_Survey_Data)[2]= "Gender"
+names(Typical_Employee_Survey_Data)[3]= "Satisfaction Level with Job"
+names(Typical_Employee_Survey_Data)[4]= "Job Characteristics of Importance"
+names(Typical_Employee_Survey_Data)[5]= "Years of Employeement"
+names(Typical_Employee_Survey_Data)[6]= "Promotion Likelyhood"
+names(Typical_Employee_Survey_Data)[7]= "Work Decision Making Frequency"
+names(Typical_Employee_Survey_Data)[8]= "Bugetary Decisions"
+names(Typical_Employee_Survey_Data)[9]= "Proud Level"
+names(Typical_Employee_Survey_Data)[10]= "Level  of Higher Salary Job Offer Turned Down for Staying"
+names(Typical_Employee_Survey_Data)[11]= "Relations between Coworkers and Colleagues"
+Typical_Employee_Survey_Data
+```
+
+
+```{r}
+#5-point summary and box plot
+fivenum(Typical_Employee_Survey_Data$AGE)
+boxplot(Typical_Employee_Survey_Data$AGE, ylab= "Age", main = "Age of Employees")
+fivenum(Typical_Employee_Survey_Data$`Years of Employeement`)
+boxplot(Typical_Employee_Survey_Data$`Years of Employeement`, ylab="Years", main = "Years of Employeement")
+
+#Convert to Factors
+Typical_Employee_Survey_Data$Gender = as.factor(Typical_Employee_Survey_Data$Gender)
+Typical_Employee_Survey_Data$`Satisfaction Level with Job` = as.factor(Typical_Employee_Survey_Data$`Satisfaction Level with Job`)
+Typical_Employee_Survey_Data$`Job Characteristics of Importance`= as.factor(Typical_Employee_Survey_Data$`Job Characteristics of Importance`)
+Typical_Employee_Survey_Data$`Promotion Likelyhood` = as.factor(Typical_Employee_Survey_Data$`Promotion Likelyhood`)
+Typical_Employee_Survey_Data$`Work Decision Making Frequency` = as.factor(Typical_Employee_Survey_Data$`Work Decision Making Frequency`)
+Typical_Employee_Survey_Data$`Bugetary Decisions`= as.factor(Typical_Employee_Survey_Data$`Bugetary Decisions`)
+Typical_Employee_Survey_Data$`Proud Level` = as.factor(Typical_Employee_Survey_Data$`Proud Level`)
+Typical_Employee_Survey_Data$`Level  of Higher Salary Job Offer Turned Down for Staying`= as.factor(Typical_Employee_Survey_Data$`Level  of Higher Salary Job Offer Turned Down for Staying`)
+Typical_Employee_Survey_Data$`Relations between Coworkers and Colleagues` = as.factor(Typical_Employee_Survey_Data$`Relations between Coworkers and Colleagues`)
+str(Typical_Employee_Survey_Data)
+Typical_Employee_Survey_Data
+
+#Plot Right Visual
+hist(Typical_Employee_Survey_Data$AGE, xlab= "Age", main = "Age Overview in Histogram Graph" )
+
+barplot(table(Typical_Employee_Survey_Data$Gender), ylab="Frequency", xlab= "Gender 1=M 2=F", main = "Gender of Workers in Bar Graph")
+
+pie(table(Typical_Employee_Survey_Data$`Satisfaction Level with Job`), main = "Satisfaction Level")
+
+barplot(table(Typical_Employee_Survey_Data$`Job Characteristics of Importance`), ylab="Frequency", xlab= "Job Characteristics", main = "Frequency of Important Job Characteristics in Bar Graph")
+
+hist(Typical_Employee_Survey_Data$`Years of Employeement`, xlab = "Years", main = "Years of Employeements in Histogram")
+
+barplot(table(Typical_Employee_Survey_Data$`Promotion Likelyhood`), ylab="Frequency", xlab= "Promotion Likelyhood 1=Very Likely 5=Very Unlikely", main = "Promotion Likelyhood in Next Five Years in Bar Graph")
+
+barplot(table(Typical_Employee_Survey_Data$`Work Decision Making Frequency`), ylab="Frequency", xlab= "Work Decision Participation 1=Always 4=Never", main = "Frequency of Taking Part in Making Work Decisions in Bar Graph")
+
+pie(table(Typical_Employee_Survey_Data$`Bugetary Decisions`), main = "Budgetary DEcisions Participation")
+
+barplot(table(Typical_Employee_Survey_Data$`Proud Level`), ylab="Frequency", xlab= "Proud Level 1=Very Proud 4=Not At All Proud", main = "How Proud are You Working for Organization in Bar Graph")
+
+pie(table(Typical_Employee_Survey_Data$`Level  of Higher Salary Job Offer Turned Down for Staying`), main = "Would You Turn Down Higher Salary Job for Staying at Organization")
+
+barplot(table(Typical_Employee_Survey_Data$`Relations between Coworkers and Colleagues`), ylab="Frequency", xlab= "Collegues Relationships Level 1=Very Good 5=Very Bad", main = "How is Your Workplace Coworkers and Colleagues Relations")
+
+#Scatter Plots for relationships
+plot(Typical_Employee_Survey_Data$AGE, Typical_Employee_Survey_Data$`Years of Employeement`, xlab = "Employee Age", ylab = "Years of Employeement", main = "Relationships Between Employee Age and Employeement Length")
+
+plot(Typical_Employee_Survey_Data$AGE, Typical_Employee_Survey_Data$`Years of Employeement`, xlab = "Employee Age", ylab = "Years of Employeement",  col=Typical_Employee_Survey_Data$Gender, main = "Relationships Between Employee Age and Employeement Years by Gender")
+legend("topright",legend=levels(Typical_Employee_Survey_Data$Gender), col = Typical_Employee_Survey_Data$Gender, fill=levels(Typical_Employee_Survey_Data$Gender))
+
+plot(Typical_Employee_Survey_Data$AGE, Typical_Employee_Survey_Data$`Years of Employeement`, xlab = "Employee Age", ylab = "Years of Employeement",  col=Typical_Employee_Survey_Data$`Promotion Likelyhood`, main = "Relationships Between Employee Age and Employeement Years by Promotion Likelyhood")
+legend("topright",legend=levels(Typical_Employee_Survey_Data$`Promotion Likelyhood`), col = Typical_Employee_Survey_Data$`Promotion Likelyhood`, fill=levels(Typical_Employee_Survey_Data$`Promotion Likelyhood`))
+
+plot(Typical_Employee_Survey_Data$AGE, Typical_Employee_Survey_Data$`Years of Employeement`, xlab = "Employee Age", ylab = "Years of Employeement",  col=Typical_Employee_Survey_Data$`Work Decision Making Frequency`, main = "Work Decision Participation Among Age and Years of Employeement")
+legend("topright",legend=levels(Typical_Employee_Survey_Data$`Work Decision Making Frequency`), col = Typical_Employee_Survey_Data$`Work Decision Making Frequency`, fill=levels(Typical_Employee_Survey_Data$`Work Decision Making Frequency`))
+
+plot(Typical_Employee_Survey_Data$AGE, Typical_Employee_Survey_Data$`Years of Employeement`, xlab = "Employee Age", ylab = "Years of Employeement",  col=Typical_Employee_Survey_Data$`Level  of Higher Salary Job Offer Turned Down for Staying`, main = "Turn Down Higher  Salary Job Among Age and Years of Employeement")
+legend("topright",legend=levels(Typical_Employee_Survey_Data$`Level  of Higher Salary Job Offer Turned Down for Staying`), col = Typical_Employee_Survey_Data$`Level  of Higher Salary Job Offer Turned Down for Staying`, fill=levels(Typical_Employee_Survey_Data$`Level  of Higher Salary Job Offer Turned Down for Staying`))
+
+```
+
